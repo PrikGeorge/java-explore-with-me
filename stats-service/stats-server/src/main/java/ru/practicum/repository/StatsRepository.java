@@ -11,22 +11,22 @@ import java.util.List;
 
 public interface StatsRepository extends JpaRepository<Hit, Long> {
 
-    @Query(" select new ru.practicum.model.ViewStats(app, uri, count(distinct ip) as hits) from Hit " +
+    @Query(" select new ru.practicum.model.Stats(app, uri, count(distinct ip) as hits) from Hit " +
             "where created between :start and :end and uri in(:uri) " +
             "group by app, uri order by hits desc")
     List<Stats> getStatisticsWithUniqueIpAndUris(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end, @Param("uri") List<String> uri);
 
-    @Query(" select new ru.practicum.model.ViewStats(app, uri, count(ip) as hits) from Hit " +
+    @Query(" select new ru.practicum.model.Stats(app, uri, count(ip) as hits) from Hit " +
             "where created between :start and :end and uri in(:uri) " +
             "group by app, uri order by hits desc")
     List<Stats> getAllStatisticsWithUris(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end, @Param("uri") List<String> uri);
 
-    @Query(" select new ru.practicum.model.ViewStats(app, uri, count(distinct ip) as hits) from Hit " +
+    @Query(" select new ru.practicum.model.Stats(app, uri, count(distinct ip) as hits) from Hit " +
             "where created between :start and :end " +
             "group by app, uri order by hits desc")
     List<Stats> getStatisticsWithUniqueIp(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
-    @Query(" select new ru.practicum.model.ViewStats(app, uri, count(ip) as hits) from Hit " +
+    @Query(" select new ru.practicum.model.Stats(app, uri, count(ip) as hits) from Hit " +
             "where created between :start and :end " +
             "group by app, uri order by hits desc")
     List<Stats> getAllStatistics(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
