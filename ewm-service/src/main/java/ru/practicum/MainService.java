@@ -10,14 +10,11 @@ import java.util.Map;
 
 @SpringBootApplication
 public class MainService {
-    //    public static void main(String[] args) {
-//        SpringApplication.run(MainService.class, args);
-//    }
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(MainService.class);
 
         Map<String, Object> props = new HashMap<>();
-        props.put("stats-server.url", "http://localhost:9090");
+        props.put("stats-server.url", "http://stats-server:9090");
         app.setDefaultProperties(props);
         app.run(args);
     }
