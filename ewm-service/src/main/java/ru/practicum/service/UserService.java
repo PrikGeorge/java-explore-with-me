@@ -27,6 +27,7 @@ public class UserService {
                 new NotFoundException("User with id=" + id + " was not found"));
     }
 
+    @Transactional
     public UserDto registerUser(NewUserRequest newUserRequest) {
         User user = UserMapper.toEntity(newUserRequest);
 

@@ -1,5 +1,6 @@
 drop table IF EXISTS users, categories, location, events, requests, compilations, event_compilations CASCADE;
 
+CREATE SEQUENCE hibernate_sequence START 1;
 
 CREATE TABLE IF NOT EXISTS users
 (

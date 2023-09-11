@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "participation_requests")
 public class ParticipationRequest {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private LocalDateTime created;
     @ManyToOne
