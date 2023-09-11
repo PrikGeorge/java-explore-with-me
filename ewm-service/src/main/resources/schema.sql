@@ -32,8 +32,7 @@ CREATE TABLE IF NOT EXISTS events
     request_moderation BOOLEAN,
     state              TEXT,
     title              VARCHAR(120),
-    views              BIGINT,
-    CONSTRAINT pk_events PRIMARY KEY (id)
+    views              BIGINT
 );
 
 CREATE TABLE IF NOT EXISTS participation_requests
@@ -51,8 +50,7 @@ CREATE TABLE IF NOT EXISTS compilations
 (
     id     BIGINT PRIMARY KEY,
     pinned BOOLEAN,
-    title  VARCHAR(50),
-    CONSTRAINT pk_compilations PRIMARY KEY (id)
+    title  VARCHAR(50)
 );
 
 CREATE TABLE IF NOT EXISTS compilation_event
