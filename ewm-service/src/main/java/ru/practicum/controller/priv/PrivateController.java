@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.*;
+import ru.practicum.service.EventCommentService;
 import ru.practicum.service.EventService;
 import ru.practicum.service.ParticipationRequestService;
 
@@ -17,6 +18,7 @@ public class PrivateController {
 
     private final ParticipationRequestService requestService;
     private final EventService eventService;
+    private final EventCommentService eventCommentService;
 
     @GetMapping("/events")
     @ResponseStatus(HttpStatus.OK)
@@ -87,6 +89,39 @@ public class PrivateController {
             @PathVariable("userId") long userId,
             @PathVariable("requestId") long requestId) {
         return requestService.cancelParticipationRequest(userId, requestId);
+    }
+
+    @GetMapping("/comment")
+    @ResponseStatus(HttpStatus.OK)
+    public List<EventCommentDTO> getCommentsByUser(@PathVariable Long userId,
+                                                   @RequestParam(required = false, defaultValue = "0") Integer from,
+                                                   @RequestParam(required = false, defaultValue = "10") Integer size,
+                                                   @RequestParam(defaultValue = "false") Boolean asc) {
+
+        return eventCommentService.getCommentsByUser(userId, asc, from, size);
+    }
+
+    @PostMapping("/comment/{eventId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public EventCommentDTO addComment(@PathVariable Long userId,
+                                      @PathVariable Long eventId,
+                                      @Valid @RequestBody EventCommentDTO comment) {
+        return eventCommentService.addComment(userId, eventId, comment);
+    }
+
+    @PutMapping("/comment/{commentId}")
+    @ResponseStatus(HttpStatus.OK)
+    public EventCommentDTO updateComment(@PathVariable Long userId,
+                                         @PathVariable Long commentId,
+                                         @RequestBody EventCommentDTO comment) {
+        return eventCommentService.updateComment(userId, commentId, comment);
+    }
+
+    @DeleteMapping("/comment/{commentId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCommentByOwner(@PathVariable Long userId,
+                                     @PathVariable Long commentId) {
+        eventCommentService.deleteCommentByOwner(userId, commentId);
     }
 
 }
