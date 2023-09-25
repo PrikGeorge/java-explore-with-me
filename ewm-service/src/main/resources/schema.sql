@@ -1,6 +1,6 @@
-drop table IF EXISTS users, categories, location, events, requests, compilations, event_compilations CASCADE;
+drop table IF EXISTS users, categories, location, events, requests, compilations, event_compilations, event_comments CASCADE;
 
-CREATE SEQUENCE hibernate_sequence START 1;
+CREATE SEQUENCE IF NOT EXISTS hibernate_sequence START 1;
 
 CREATE TABLE IF NOT EXISTS users
 (
@@ -59,4 +59,15 @@ CREATE TABLE IF NOT EXISTS compilation_event
     compilation_id BIGINT REFERENCES compilations(id),
     event_id BIGINT REFERENCES events(id),
     CONSTRAINT PK_event_compilations PRIMARY KEY (compilation_id, event_id)
+);
+
+CREATE TABLE IF NOT EXISTS event_comments (
+    id BIGINT PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP,
+    author_id INTEGER NOT NULL,
+    event_id INTEGER NOT NULL,
+    comment VARCHAR(1000),
+    FOREIGN KEY (author_id) REFERENCES users(id),
+    FOREIGN KEY (event_id) REFERENCES events(id)
 );
